@@ -11,10 +11,11 @@ primary source or an experiment actually run.
 
 | Phase | Status |
 |---|---|
-| 00 — Repository & project initialization | In progress |
-| 01 — NASA dataset discovery & selection | Done (see caveats in `docs/DATASET.md`) |
-| 02 — Data acquisition | Blocked — see below |
-| 03–13 | Not started |
+| 00 — Repository & project initialization | Done |
+| 01 — NASA dataset discovery & selection | Done (see `docs/DATASET.md`) |
+| 02 — Data acquisition | Done — archive acquired, checksummed, extracted, provenance confirmed (`docs/DATASET.md`) |
+| 03 — Data validation & EDA | In progress — integrity checks done (`reports/data_validation.json`); full EDA/leakage write-up pending |
+| 04–13 | Not started |
 
 ## Primary task
 
@@ -24,16 +25,14 @@ ejecta, swiss cheese, spider, other. See `docs/DATASET_SELECTION.md` for
 the comparison against alternative NASA datasets and `docs/DATASET.md` for
 full provenance.
 
-## Known blocker
+## Former blocker (resolved)
 
-This project is being developed inside a sandboxed session whose network
-egress proxy blocks the hosts that serve the actual dataset
-(`zenodo.org`, `data.nasa.gov`). Real data acquisition, training, and
-evaluation cannot happen from inside this sandbox. The acquisition
-pipeline, configs, and model code are being built so that a developer (or
-a session with unrestricted network access) can run them end-to-end. No
-metric in this repository is real until that has happened — see the
-performance target dashboard in `README.md`, which will read `NOT YET
+Phase 00/01 were originally scaffolded inside a cloud sandbox whose network
+egress could not reach `zenodo.org`/`data.nasa.gov`. The user supplied the
+real archive directly into a local session instead; it has since been
+extracted, checksummed, and measured (see `docs/DATASET.md`). No training
+metric in this repository is real until training actually happens — see
+the performance target dashboard in `README.md`, which reads `NOT YET
 MEASURED` until then.
 
 ## Engineering principles (non-negotiable)

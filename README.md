@@ -23,17 +23,15 @@ imagery to a defensible benchmark.
 
 ## NASA dataset
 
-Primary dataset: **Mars orbital image (HiRISE) labeled data set**
+Primary dataset: **Mars orbital image (HiRISE) labeled data set, version 3**
 (DeepMars, Wagstaff et al., NASA/JPL, HiRISE camera on Mars
-Reconnaissance Orbiter). Full provenance, including fields still pending
-verification, is in `docs/DATASET.md`. Dataset comparison and selection
-rationale is in `docs/DATASET_SELECTION.md`.
-
-**Known blocker:** this repository is being developed inside a sandboxed
-session whose network cannot reach the hosts serving the dataset
-(`zenodo.org`, `data.nasa.gov`). Real acquisition and training require an
-environment with unrestricted network access. See `docs/DATASET.md` for
-details and next steps.
+Reconnaissance Orbiter; DOI `10.5281/zenodo.2538136`). Acquired, extracted,
+checksummed, and measured directly — 73,031 images, 8 classes, 227×227
+single-channel, 0 corrupted, 0 exact duplicates, no official split shipped
+in the archive. Full provenance and every measured figure is in
+`docs/DATASET.md`; the leakage-prevention split strategy is in
+`docs/DATA_SPLIT.md`; dataset comparison/selection rationale is in
+`docs/DATASET_SELECTION.md`.
 
 ## Problem definition
 
@@ -129,6 +127,8 @@ Not yet implemented — see Phase 11.
 Wagstaff, K.L., Lu, Y., Stanboli, A., Grimes, K., Gowda, T., Padams, J.
 "Deep Mars: CNN Classification of Mars Imagery for the PDS Imaging
 Atlas." Proceedings of the Thirtieth Annual Conference on Innovative
-Applications of Artificial Intelligence (IAAI), 2018. Dataset hosted by
-NASA/JPL via Zenodo — exact DOI/version pending verification, see
+Applications of Artificial Intelligence (IAAI), 2018. Dataset: "Mars
+orbital image (HiRISE) labeled data set version 3," DOI
+`10.5281/zenodo.2538136`, hosted on Zenodo and listed on NASA's Open Data
+Portal. License terms are not yet confirmed from the primary record — see
 `docs/DATASET.md`.
