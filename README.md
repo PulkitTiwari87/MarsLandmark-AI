@@ -122,8 +122,27 @@ Not yet runnable (see above).
 
 ## Inference / API
 
-Not yet implemented — see Phase 11.
-Implement everything
+A FastAPI service is implemented in `src/api/main.py`:
+
+- `GET /health` — reports `{"status": "ok", "model_loaded": <bool>}`.
+- `POST /predict` — accepts an image file; returns the predicted class,
+  confidence, and full per-class probability distribution. If no trained
+  checkpoint is available (true today — see `docs/DATASET.md`), it
+  returns HTTP 503 with an explicit message rather than a fabricated
+  prediction.
+
+`/explain` (Grad-CAM) is deferred to Phase 09, since it requires an
+actual trained model to be meaningful.
+
+Run locally:
+
+```bash
+uvicorn src.api.main:app --reload
+```
+
+By default it looks for a checkpoint at `checkpoints/best.pt` and config
+at `configs/config.yaml` (override with the `MARSLANDMARK_CHECKPOINT` /
+`MARSLANDMARK_CONFIG` environment variables).
 
 ## Citation / data attribution
 

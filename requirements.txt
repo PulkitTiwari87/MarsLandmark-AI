@@ -9,3 +9,7 @@ matplotlib
 torch
 torchvision
 pytest
+fastapi
+uvicorn
+python-multipart
+httpx
