@@ -1,0 +1,32 @@
+# Default project configuration.
+# Values below are engineering defaults, NOT results of hyperparameter
+# search — no search has been run yet (see docs/EXPERIMENTS.md).
+
+seed: 42
+
+data:
+  dataset_name: "hirise-landmark-v3.2"
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  image_size: 227  # matches the source dataset's native crop size
+  batch_size: 32
+  num_workers: 4
+  val_fraction: null  # dataset provides an official split; see docs/DATA_SPLIT.md
+  test_fraction: null
+
+training:
+  epochs: 30
+  learning_rate: 0.0001
+  weight_decay: 0.0001
+  optimizer: "adamw"
+  scheduler: "cosine"
+  early_stopping_patience: 5
+
+model:
+  name: "resnet50"
+  pretrained: true
+  num_classes: 8
+
+logging:
+  experiment_registry: "experiments/experiments.csv"
+  checkpoint_dir: "checkpoints"

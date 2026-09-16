@@ -1,0 +1,1 @@
+experiment_id,date,git_commit,dataset_version,dataset_checksum,model,image_size,batch_size,optimizer,learning_rate,scheduler,epochs,seed,augmentation,loss_function,hardware,training_time_min,val_accuracy,val_macro_f1,test_accuracy,test_macro_f1,status,notes

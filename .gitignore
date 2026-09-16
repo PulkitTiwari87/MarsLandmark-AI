@@ -1,0 +1,49 @@
+# Data (never commit raw/processed NASA imagery — see docs/DATASET.md)
+/data/*
+!/data/.gitkeep
+*.img
+*.IMG
+*.fits
+
+# Model artifacts
+*.pt
+*.pth
+*.ckpt
+*.h5
+*.onnx
+/checkpoints/
+/models/*.bin
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+__pycache__/
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# Environment / secrets
+.env
+*.env.local
+*.pem
+*.key
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Logs and reports (generated, not source)
+*.log
+/reports/*.json
+!/reports/.gitkeep
+/wandb/
+/mlruns/
