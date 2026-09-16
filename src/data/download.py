@@ -1,11 +1,13 @@
 """Reproducible acquisition of the HiRISE landmark dataset (DeepMars).
 
-Primary source: Zenodo record for "Mars orbital image (HiRISE) labeled
-data set" (Wagstaff et al.). The canonical DOI/version for v3.2 is not yet
-confirmed — see docs/DATASET.md. Update PRIMARY_URL once verified from an
-environment with unrestricted network access; this script has not been
-exercised end-to-end because zenodo.org is unreachable from the sandboxed
-session it was written in.
+Primary source: Zenodo record 2538136, "Mars orbital image (HiRISE)
+labeled data set version 3" (Wagstaff et al., DOI 10.5281/zenodo.2538136).
+Confirmed via NASA's Open Data Portal listing (data.nasa.gov), which links
+directly to this record, and cross-checked against the archive's own
+bundled README.txt. See docs/DATASET.md for full provenance.
+
+Note: v3.2 (Zenodo record 4002935) is a *different, later* record with a
+different DOI — do not conflate the two. This project uses v3.
 
 Usage:
     python -m src.data.download --output-dir data/raw
@@ -23,10 +25,10 @@ from urllib.request import urlopen
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
 
-# TODO(docs/DATASET.md #Outstanding actions): confirm canonical DOI/version
-# and replace this placeholder before running for real.
-PRIMARY_URL = "https://zenodo.org/records/REPLACE_WITH_VERIFIED_RECORD_ID/files/hirise-map-proj-v3_2.zip"
-EXPECTED_SHA256: str | None = None  # fill in after first verified download
+PRIMARY_URL = "https://zenodo.org/records/2538136/files/hirise-map-proj-v3.zip"
+# Verified by this project against a copy of the archive obtained 2026-09-17;
+# see docs/DATASET.md "Confirmed measurements" for how this was computed.
+EXPECTED_SHA256: str | None = "e22ee769a61986082f76d762182c572ce2b9ae6b7a142b23a14e46631c9e4d06"
 
 
 def download_file(url: str, dest: Path, chunk_size: int = 1 << 20) -> None:
@@ -61,7 +63,7 @@ def main() -> int:
     parser.add_argument("--url", type=str, default=PRIMARY_URL)
     args = parser.parse_args()
 
-    if "REPLACE_WITH_VERIFIED_RECORD_ID" in args.url:
+    if "REPLACE_WITH" in args.url:
         logger.error(
             "PRIMARY_URL is still a placeholder — the canonical dataset DOI/version "
             "has not been verified yet (see docs/DATASET.md, 'Outstanding actions'). "

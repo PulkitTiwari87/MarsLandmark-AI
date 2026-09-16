@@ -1,6 +1,7 @@
 # Data (never commit raw/processed NASA imagery — see docs/DATASET.md)
 /data/*
 !/data/.gitkeep
+/dataset/
 *.img
 *.IMG
 *.fits
@@ -41,9 +42,12 @@ __pycache__/
 .idea/
 .vscode/
 
-# Logs and reports (generated, not source)
+# Logs and reports (generated, not source) — but validation/benchmark
+# reports ARE committed as inspectable evidence (project rule: results must
+# be reproducible and reviewable without re-running against the full dataset)
 *.log
 /reports/*.json
+!/reports/data_validation.json
 !/reports/.gitkeep
 /wandb/
 /mlruns/
