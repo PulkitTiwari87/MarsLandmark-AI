@@ -14,13 +14,12 @@ import argparse
 import collections
 import hashlib
 import json
-import re
 import sys
 from pathlib import Path
 
 from PIL import Image
 
-STRIP_ID_PATTERN = re.compile(r"^([A-Z]+_\d+_\d+_RED)-(\d+)(.*)\.jpg$")
+from src.data.common import strip_id_for
 
 
 def validate_dataset(data_dir: Path) -> dict:
@@ -56,9 +55,9 @@ def validate_dataset(data_dir: Path) -> dict:
 
         content_hashes[hashlib.md5(path.read_bytes()).hexdigest()].append(name)
 
-        m = STRIP_ID_PATTERN.match(name)
-        if m:
-            strip_ids.add(m.group(1))
+        sid = strip_id_for(name)
+        if sid:
+            strip_ids.add(sid)
         else:
             unparseable_filenames.append(name)
 

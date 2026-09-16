@@ -11,8 +11,8 @@ data:
   image_size: 227  # matches the source dataset's native crop size
   batch_size: 32
   num_workers: 4
-  val_fraction: null  # no official split in this archive; grouped split TBD, see docs/DATA_SPLIT.md
-  test_fraction: null
+  val_fraction: 0.15  # grouped split (src/data/split.py); measured result in docs/DATA_SPLIT.md
+  test_fraction: 0.15
 
 training:
   epochs: 30

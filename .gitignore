@@ -49,6 +49,7 @@ __pycache__/
 /reports/*.json
 !/reports/data_validation.json
 !/reports/eda_summary.json
+!/reports/split_report.json
 !/reports/.gitkeep
 /wandb/
 /mlruns/

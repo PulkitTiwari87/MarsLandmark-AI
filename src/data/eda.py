@@ -16,7 +16,6 @@ from __future__ import annotations
 import argparse
 import collections
 import json
-import re
 import sys
 from pathlib import Path
 
@@ -27,7 +26,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
 
-STRIP_ID_PATTERN = re.compile(r"^([A-Z]+_\d+_\d+_RED)-(\d+)(.*)\.jpg$")
+from src.data.common import strip_id_for
 
 CLASS_NAMES = {
     "0": "other",
@@ -63,9 +62,9 @@ def run_eda(data_dir: Path, figures_dir: Path, seed: int = 42, brightness_sample
 
     strip_counts: collections.Counter = collections.Counter()
     for fname, _ in lines:
-        m = STRIP_ID_PATTERN.match(fname)
-        if m:
-            strip_counts[m.group(1)] += 1
+        sid = strip_id_for(fname)
+        if sid:
+            strip_counts[sid] += 1
     strip_values = sorted(strip_counts.values())
     fig, ax = plt.subplots(figsize=(8, 5))
     ax.hist(strip_values, bins=30)

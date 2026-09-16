@@ -14,8 +14,9 @@ primary source or an experiment actually run.
 | 00 — Repository & project initialization | Done |
 | 01 — NASA dataset discovery & selection | Done (see `docs/DATASET.md`) |
 | 02 — Data acquisition | Done — archive acquired, checksummed, extracted, provenance confirmed (`docs/DATASET.md`) |
-| 03 — Data validation & EDA | In progress — integrity checks done (`reports/data_validation.json`); full EDA/leakage write-up pending |
-| 04–13 | Not started |
+| 03 — Data validation & EDA | Done — `reports/data_validation.json`, `reports/eda_summary.json`, `docs/EDA.md`, `docs/DATA_SPLIT.md` |
+| 04 — Data pipeline (grouped split, Dataset/DataLoader) | In progress — being built into a Colab training notebook (local GPU use declined by user for this run) |
+| 05–13 | Not started |
 
 ## Primary task
 
