@@ -1,0 +1,29 @@
+{
+  "dataset_version": "hirise-map-proj-v3",
+  "data_dir": "data\\raw",
+  "total_images_on_disk": 73031,
+  "total_label_lines": 73031,
+  "labels_without_matching_image": [],
+  "images_without_matching_label": [],
+  "corrupted_or_unreadable_images": [],
+  "dimension_distribution": {
+    "(227, 227)": 73031
+  },
+  "color_mode_distribution": {
+    "L": 73031
+  },
+  "exact_duplicate_content_groups": 0,
+  "files_in_exact_duplicate_groups": 0,
+  "class_distribution": {
+    "0": 61054,
+    "1": 4900,
+    "2": 1141,
+    "3": 2331,
+    "4": 1750,
+    "5": 231,
+    "6": 1148,
+    "7": 476
+  },
+  "unique_source_strip_ids": 173,
+  "unparseable_filenames": []
+}
