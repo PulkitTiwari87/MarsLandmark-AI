@@ -41,6 +41,7 @@ __pycache__/
 .DS_Store
 .idea/
 .vscode/
+.claude/
 
 # Logs and reports (generated, not source) — but validation/benchmark
 # reports ARE committed as inspectable evidence (project rule: results must
