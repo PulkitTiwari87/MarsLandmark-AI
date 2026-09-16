@@ -1,13 +1,13 @@
 # Dataset Provenance — MarsLandmark-AI
 
-Status: **ACQUIRED AND VERIFIED (2026-09-17).** The archive was obtained by
-the user directly (this repository's automated downloader could not reach
+Status: **FULLY VERIFIED (2026-09-17).** The archive was obtained by the
+user directly (this repository's automated downloader could not reach
 `zenodo.org` from the cloud sandbox it was originally written in — see
-"Acquisition method" below) and has now been inspected directly: extracted,
-checksummed, and every figure below either measured from the actual files
-on disk or corroborated against NASA's own Open Data Portal. Fields that
-remain genuinely unresolved are still marked `PENDING VERIFICATION`, but
-that list is now short.
+"Acquisition method" below). It has since been inspected directly
+(extracted, checksummed) AND the primary Zenodo record itself
+(`zenodo.org/record/2538136`) became reachable and was read directly this
+session, resolving every remaining open item, including the license. No
+`PENDING VERIFICATION` fields remain.
 
 ## Acquisition method
 
@@ -36,12 +36,15 @@ that list is now short.
 | Common/project name | DeepMars — HiRISE landmark classification dataset | Confirmed |
 | NASA organization/mission | NASA / JPL, Mars Reconnaissance Orbiter (MRO) | Confirmed |
 | Instrument | HiRISE (High Resolution Imaging Science Experiment) | Confirmed |
-| Originating publication | Wagstaff, K.L., Lu, Y., Stanboli, A., Grimes, K., Gowda, T., Padams, J. "Deep Mars: CNN Classification of Mars Imagery for the PDS Imaging Atlas." IAAI 2018. | Confirmed |
+| Dataset creators (per primary Zenodo record) | Gary Doran, Steven Lu, Lukas Mandrake, Kiri Wagstaff (all JPL) | **CONFIRMED** — read directly from `zenodo.org/record/2538136` |
+| Originating publication | Wagstaff, K.L., Lu, Y., Stanboli, A., Grimes, K., Gowda, T., Padams, J. "Deep Mars: CNN Classification of Mars Imagery for the PDS Imaging Atlas." IAAI 2018. (Related paper — the dataset's own citation is the Zenodo record itself, authors above.) | Confirmed |
 | Follow-up publication | Wagstaff et al., "Mars Image Content Classification: Three Years of NASA Deployment and Recent Advances," 2021 (arXiv:2102.05011) | Confirmed to exist via search; full text not independently re-read |
-| DOI | `10.5281/zenodo.2538136` | **CONFIRMED** — (a) printed verbatim in the archive's own `README.txt` ("please cite this DOI: 10.5281/zenodo.2538136"), (b) `https://doi.org/10.5281/zenodo.2538136` successfully resolves to `zenodo.org/record/2538136`, (c) NASA's Open Data Portal listing for "version 3" links directly to `https://zenodo.org/record/2538136` |
-| Hosting | Zenodo record 2538136, mirrored/listed on NASA's Open Data Portal (`data.nasa.gov`, resource id `c93bf426-1eae-4d3b-8afd-548add5e24ce`, organization = NASA) | Confirmed — data.nasa.gov page loaded and read directly this session |
-| Dataset version acquired | **Version 3** (this archive) — NOT version 3.2 | **CORRECTED.** Earlier scaffolding assumed "v3.2" from a third-party reimplementation reference. Version 3.2 is a *separate* Zenodo record (4002935) with a different DOI. The file actually in hand (`hirise-map-proj-v3.zip`) is version 3. `configs/config.yaml` has been corrected accordingly. |
-| License / usage terms | NASA's Open Data Portal resource page explicitly shows **"License not specified"** for this resource (directly observed, 2026-09-17). A secondary web-search aggregator summary claimed "Creative Commons Attribution," but this could not be independently confirmed against the primary Zenodo record itself, which returned 504 errors throughout this session. | **PENDING VERIFICATION** — treat as "license unconfirmed" for any redistribution/commercial-use decision until the primary Zenodo page is readable, or contact NASA/JPL directly. Do not rely on the secondhand CC-BY claim. |
+| DOI | `10.5281/zenodo.2538136` (this is version 3.0.0 specifically; the "cite all versions" concept DOI is `10.5281/zenodo.2538135`) | **CONFIRMED** — read directly from the primary Zenodo record page, which loaded successfully this session after an earlier 504 outage cleared |
+| Publication date | January 11, 2019 (version 3.0.0); record last modified September 17, 2020 | **CONFIRMED** — read directly from the primary Zenodo record |
+| Hosting | Zenodo record 2538136, mirrored/listed on NASA's Open Data Portal (`data.nasa.gov`, resource id `c93bf426-1eae-4d3b-8afd-548add5e24ce`, organization = NASA) | Confirmed — both data.nasa.gov and zenodo.org pages loaded and read directly this session |
+| Dataset version acquired | **Version 3.0.0** (this archive) — NOT version 3.2.0 | **CORRECTED.** Earlier scaffolding assumed "v3.2" from a third-party reimplementation reference. Version 3.2.0 is a *separate*, later Zenodo record (`10.5281/zenodo.4002935`, published Sep 16, 2020) — the primary record's own "Versions" panel confirms these are two distinct records. The file in hand (`hirise-map-proj-v3.zip`) is version 3.0.0. `configs/config.yaml` corrected accordingly. |
+| License / usage terms | **Creative Commons Attribution 4.0 International (CC-BY 4.0)** | **CONFIRMED** — read directly from the primary Zenodo record's "Rights" field, 2026-09-17. (NASA's Open Data Portal mirror page shows "License not specified" for its own listing, but the primary Zenodo record — the authoritative source — states CC-BY 4.0 explicitly.) |
+| Archive checksum (author-published) | MD5 `cab4aeb474f76d82b7188a8f342a608b`, size 985.9 MB | **CONFIRMED** — published on the primary Zenodo record's file listing, and verified byte-for-byte identical against the local copy in this session (see "Archive integrity record" below) |
 
 ## Task and annotations — confirmed by direct measurement
 
@@ -70,9 +73,10 @@ The figures below were computed directly from the extracted archive
 | Field | Value |
 |---|---|
 | Filename | `hirise-map-proj-v3.zip` |
-| SHA-256 | `e22ee769a61986082f76d762182c572ce2b9ae6b7a142b23a14e46631c9e4d06` |
-| Size | 985,889,206 bytes (≈940 MiB) |
-| Computed | 2026-09-17, this session, via streaming SHA-256 over the full file |
+| SHA-256 (this session's own record) | `e22ee769a61986082f76d762182c572ce2b9ae6b7a142b23a14e46631c9e4d06` |
+| MD5 (author-published, Zenodo) | `cab4aeb474f76d82b7188a8f342a608b` — **matches the local copy exactly, verified this session** |
+| Size | 985,889,206 bytes (985.9 MB, matches Zenodo's listed size) |
+| Computed | 2026-09-17, this session, via streaming SHA-256/MD5 over the full file |
 | Extracted to | `data/raw/` (git-ignored; never committed — see `.gitignore`) |
 
 Anyone reproducing this project should download
@@ -83,16 +87,21 @@ refuses to proceed on a mismatch.
 
 ## Outstanding actions (genuinely unresolved)
 
-1. **License.** Confirm the actual Zenodo-recorded license once the
-   primary record page is reachable (it returned 504 throughout this
-   session). Do not redistribute this repository's copy of the dataset or
-   make license claims in the README until this is resolved.
-2. **180 vs. 173 source images.** Resolve why filename-derived grouping
-   yields 173 unique RED-strip IDs against the documented 180 source
-   images, if it ever becomes relevant beyond leakage-safe splitting (which
-   works correctly today regardless of this count).
-3. **The withdrawn 10,815 / 6,997-2,025-1,793 figures.** These appeared in
+1. **180 vs. 173 source images.** The primary Zenodo record confirms 180
+   source browse images (matching the archive's own README), but
+   filename-derived grouping in this project yields only 173 unique
+   RED-strip IDs. This is a project-side parsing question, not a dataset
+   provenance question, and does not block leakage-safe splitting (which
+   only needs crops from the same strip grouped together, which holds for
+   100% of files) — but the exact cause (7 "missing" strips) is unresolved.
+2. **The withdrawn 10,815 / 6,997-2,025-1,793 figures.** These appeared in
    earlier (pre-file-access) research summaries and could not be
-   corroborated against this archive. If a differently-versioned or
-   differently-sourced copy of this dataset does carry an official split,
-   it is not the one in this archive — do not silently merge the two.
+   corroborated against this archive or the primary Zenodo record, which
+   documents only the 10,433/180/62,598/73,031 figures above. Treat the
+   10,815 figure as an error from a different source, not a fact about
+   this dataset.
+
+License, DOI, version, hosting, and archive integrity are now fully
+confirmed against the primary record — no further verification needed
+before proceeding to Phase 03 (validation/EDA, already largely done) and
+Phase 04 (pipeline).

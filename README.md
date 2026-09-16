@@ -124,11 +124,11 @@ Not yet implemented — see Phase 11.
 
 ## Citation / data attribution
 
-Wagstaff, K.L., Lu, Y., Stanboli, A., Grimes, K., Gowda, T., Padams, J.
-"Deep Mars: CNN Classification of Mars Imagery for the PDS Imaging
-Atlas." Proceedings of the Thirtieth Annual Conference on Innovative
-Applications of Artificial Intelligence (IAAI), 2018. Dataset: "Mars
-orbital image (HiRISE) labeled data set version 3," DOI
-`10.5281/zenodo.2538136`, hosted on Zenodo and listed on NASA's Open Data
-Portal. License terms are not yet confirmed from the primary record — see
+Dataset: Gary Doran, Steven Lu, Lukas Mandrake, Kiri Wagstaff. "Mars
+orbital image (HiRISE) labeled data set version 3" (Version 3.0.0)
+[Dataset]. Zenodo, 2019. https://doi.org/10.5281/zenodo.2538136. Licensed
+under **Creative Commons Attribution 4.0 International (CC-BY 4.0)**.
+Related paper: Wagstaff, K.L., Lu, Y., Stanboli, A., Grimes, K., Gowda,
+T., Padams, J. "Deep Mars: CNN Classification of Mars Imagery for the PDS
+Imaging Atlas." IAAI 2018. Full provenance and verification method in
 `docs/DATASET.md`.
