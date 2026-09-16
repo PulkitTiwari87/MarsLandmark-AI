@@ -123,6 +123,7 @@ Not yet runnable (see above).
 ## Inference / API
 
 Not yet implemented — see Phase 11.
+Implement everything
 
 ## Citation / data attribution
 
