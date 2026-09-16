@@ -48,6 +48,7 @@ __pycache__/
 *.log
 /reports/*.json
 !/reports/data_validation.json
+!/reports/eda_summary.json
 !/reports/.gitkeep
 /wandb/
 /mlruns/
