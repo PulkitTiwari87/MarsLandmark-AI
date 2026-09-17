@@ -86,7 +86,10 @@ poor recall (0.576). No image-level failure gallery yet (Phase 09).
 
 ## Explainability
 
-Not yet performed — see `docs/EXPLAINABILITY.md` once written (Phase 09).
+Grad-CAM and calibration code implemented, tested, and wired into the
+API's `/explain` endpoint — but not yet run against the real trained
+checkpoint (only verified end-to-end with an untrained one). See
+`docs/EXPLAINABILITY.md`.
 
 ## Results
 
@@ -108,11 +111,11 @@ minority-class performance — see `docs/ERROR_ANALYSIS.md`.
 
 ## Limitations
 
-See `docs/LIMITATIONS.md` once written (not yet — Phase 13). Known
-limitations measured so far: complete failure on the "spider" class
-(`docs/ERROR_ANALYSIS.md`), run-to-run non-determinism despite a fixed
-seed (`docs/REPRODUCIBILITY.md`), and no image-level explainability yet
-(Phase 09).
+See `docs/LIMITATIONS.md` for the full consolidated list. Headline items:
+complete failure on the "spider" class (`docs/ERROR_ANALYSIS.md`),
+run-to-run non-determinism despite a fixed seed
+(`docs/REPRODUCIBILITY.md`), and no Grad-CAM/calibration run against the
+real checkpoint yet (`docs/EXPLAINABILITY.md`).
 
 ## Reproducibility
 
@@ -142,7 +145,19 @@ see `docs/RESULTS.md`.
 
 ## Inference / API
 
-Not yet implemented — see Phase 11.
+`src/api/main.py` (FastAPI): `GET /health`, `POST /predict`,
+`POST /explain` (Grad-CAM heatmap). Run with:
+
+```bash
+MODEL_CHECKPOINT_PATH=checkpoints/exp_resnet18_finetuned.pt \
+  uvicorn src.api.main:app --reload
+```
+
+`frontend/index.html` is a single static file (no build step) that talks
+to this API — drag/drop an image, see the prediction, top-5 confidences,
+and a Grad-CAM overlay. Open it directly or serve it
+(`python -m http.server 8080 --directory frontend`); see
+`docs/MODEL_CARD.md` before trusting any prediction it shows.
 
 ## Citation / data attribution
 

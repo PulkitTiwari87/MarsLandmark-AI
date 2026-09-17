@@ -18,13 +18,13 @@ primary source or an experiment actually run.
 | 04 — Data pipeline (grouped split, Dataset/DataLoader) | Done — `src/data/split.py`, `src/data/dataset.py`, `docs/DATA_PIPELINE.md` |
 | 05 — Baseline | Done — trained in Colab 2026-09-17: SimpleCNN val macro F1 0.2978 (`docs/EXPERIMENTS.md`) |
 | 06 — Deep learning / transfer learning | Done — ResNet18 frozen (val macro F1 0.52–0.58, 4 runs) and fine-tuned (0.7188, selected) (`docs/EXPERIMENTS.md`) |
-| 07 — Optimization (imbalance, overfitting/underfitting investigation) | Not started — `docs/EXPERIMENTS.md` flags class-weighted loss as the leading untested hypothesis given the measured "spider"-class failure |
+| 07 — Optimization (imbalance, overfitting/underfitting investigation) | Code done (`src/training/imbalance.py`, wired into `src/training/train.py`), unit-tested; **comparison run not yet executed** — needs a Colab run against the real checkpoint |
 | 08 — Final evaluation | Done — test accuracy 93.11%, macro F1 71.56%, full confusion matrix in `docs/RESULTS.md`/`reports/final_test_evaluation.json` |
-| 09 — Explainability & robustness | Not started |
-| 10 — Detection/localization | Not started (dataset only supports classification, see `docs/DATASET_SELECTION.md`) |
-| 11 — API | Not started |
-| 12 — Frontend/dashboard | Not started |
-| 13 — Final documentation | In progress |
+| 09 — Explainability & robustness | Grad-CAM + calibration code done (`src/explainability/gradcam.py`, `src/training/calibration.py`), unit-tested, wired into the API; **not yet run against the real checkpoint** — see `docs/EXPLAINABILITY.md`. Robustness testing not started. |
+| 10 — Detection/localization | Not applicable — dataset only supports classification, see `docs/DATASET_SELECTION.md` |
+| 11 — API | Done — `src/api/main.py`, tested, verified live in a browser |
+| 12 — Frontend/dashboard | Done — `frontend/index.html`, verified live end-to-end (predict + Grad-CAM) in a browser |
+| 13 — Final documentation | Done — `docs/MODEL_CARD.md`, `docs/LIMITATIONS.md`, `docs/EXPLAINABILITY.md` added; README fully updated |
 
 ## Primary task
 
