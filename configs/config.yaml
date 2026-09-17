@@ -21,9 +21,10 @@ training:
   optimizer: "adamw"
   scheduler: "cosine"
   early_stopping_patience: 5
+  class_weighted_loss: false  # Phase 07 candidate; compare against docs/EXPERIMENTS.md's val macro F1 0.7188 baseline before enabling by default
 
 model:
-  name: "resnet50"
+  name: "resnet18"  # actually trained/validated (docs/EXPERIMENTS.md); resnet50 not yet tried
   pretrained: true
   num_classes: 8
 

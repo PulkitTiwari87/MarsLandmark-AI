@@ -23,6 +23,7 @@ from torch.utils.data import DataLoader
 from src.data.dataset import HiRISELandmarkDataset
 from src.models.baseline import SimpleCNN
 from src.models.resnet import build_resnet
+from src.training.imbalance import compute_class_weights
 from src.training.metrics import compute_metrics
 
 CLASS_NAMES = {
@@ -194,7 +195,14 @@ def main() -> int:
     val_loader = DataLoader(val_ds, batch_size=batch_size, shuffle=False, num_workers=config["data"].get("num_workers", 0))
 
     model = build_model(model_name, num_classes=config["model"]["num_classes"]).to(device)
-    criterion = nn.CrossEntropyLoss()
+    if config["training"].get("class_weighted_loss"):
+        train_label_counts: dict[int, int] = {}
+        for _, label in train_ds.samples:
+            train_label_counts[label] = train_label_counts.get(label, 0) + 1
+        class_weights = compute_class_weights(train_label_counts).to(device)
+        criterion = nn.CrossEntropyLoss(weight=class_weights)
+    else:
+        criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.AdamW(
         model.parameters(),
         lr=config["training"]["learning_rate"],
@@ -230,7 +238,7 @@ def main() -> int:
         epochs=len(result["history"]["train_loss"]),
         seed=config["seed"],
         augmentation="none (dataset pre-augmented 6x, see docs/EDA.md)",
-        loss_function="cross_entropy",
+        loss_function="cross_entropy_weighted" if config["training"].get("class_weighted_loss") else "cross_entropy",
         hardware=hardware,
         training_time_min=round(training_time_min, 2),
         val_accuracy=round(result["history"]["val_accuracy"][-1], 4),
