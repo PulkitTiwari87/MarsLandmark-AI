@@ -2,12 +2,36 @@
 
 ## FACT: fixed seed did not produce identical results across runs
 
-`experiments/experiments.csv` records 4 separate runs of the identical
-ResNet18-frozen-backbone cell, same `seed=42`, same code, same data,
-same hardware class (Tesla T4): val macro F1 came back as 0.5476, 0.5498,
-0.5761, and 0.5195 — a spread of 0.057 (about 10% relative). This is a
-measured fact from `notebooks/colab_train.ipynb`'s actual run on
-2026-09-17, not a hypothetical concern.
+`experiments/experiments.csv` records 6 separate runs of the identical
+ResNet18-frozen-backbone cell (across two full Colab sessions), same
+`seed=42`, same code, same data, same hardware class (Tesla T4): val
+macro F1 came back as 0.5476, 0.5498, 0.5761, 0.5195, 0.5476, 0.5498 — a
+spread of 0.057 (about 10% relative) across the 4 distinct values, with 2
+runs (one per session) matching to 4 decimal places. Frozen-backbone runs
+are evidently far more reproducible than full fine-tunes (below), likely
+because far fewer parameters (only `fc`) are actually being optimized.
+
+**FACT: full fine-tuning is much less reproducible, and the divergence
+propagates all the way to the final test evaluation.** Two independent
+full sessions each ran `exp_resnet18_finetuned` from the same starting
+config (pretrained ImageNet init, lr=1e-4, 15-epoch budget, patience=5,
+seed=42):
+
+| | Session 1 | Session 2 |
+|---|---:|---:|
+| Epochs completed | 15 (ran full budget) | 6 (early-stopped) |
+| Val macro F1 (best) | 0.7188 | 0.6926 |
+| Test accuracy | 93.11% | 93.63% |
+| Test macro F1 | 71.56% | 73.56% |
+
+Both are genuine, separately-trained models — not the same weights
+evaluated twice (which would violate test-set integrity, project rule
+§6). Both final test evaluations are kept and documented
+(`reports/final_test_evaluation.json` and
+`reports/final_test_evaluation_run2.json`) rather than one being
+discarded or silently overwritten. This is the concrete evidence behind
+this project's repeated caution that its headline numbers describe one
+measured run, not a guaranteed constant.
 
 **INTERPRETATION:** `torch.manual_seed(SEED)` (and `cuda.manual_seed_all`)
 seeds PyTorch's own RNG, but does not by itself make cuDNN's GPU

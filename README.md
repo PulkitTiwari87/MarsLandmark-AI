@@ -3,9 +3,10 @@
 A reproducible, scientifically honest computer-vision project for
 classifying Martian geological landmarks from real NASA/JPL imagery.
 
-**Status: baseline + transfer learning trained and evaluated (Phase 06/08
-done).** No metric below is fabricated or estimated — anything not yet
-measured is labeled `NOT YET MEASURED`/`NOT MEASURED`.
+**Status: Phases 00–09, 11–12 done** (training, final evaluation,
+class-imbalance experiment, explainability/calibration, API, frontend).
+No metric below is fabricated or estimated — anything not yet measured is
+labeled `NOT YET MEASURED`/`NOT MEASURED`.
 
 ## Overview
 
@@ -70,26 +71,33 @@ described in the project's master instructions and will be elaborated in
 | Experiment | Model | Image Size | Epochs | Val Accuracy | Val Macro F1 | Test Accuracy | Test Macro F1 | Train Time |
 |---|---|---:|---:|---:|---:|---:|---:|---:|
 | exp_baseline_simplecnn | SimpleCNN (scratch) | 227 | 10 | 0.7766 | 0.2978 | NOT MEASURED | NOT MEASURED | 22.0 min |
-| exp_resnet18_frozen (4 runs) | ResNet18 (frozen) | 227 | 5 | 0.845–0.855 | 0.520–0.576 | NOT MEASURED | NOT MEASURED | ~10.6 min |
-| exp_resnet18_finetuned | ResNet18 (fine-tuned) | 227 | 15 | 0.9013 | 0.7188 | **0.9311** | **0.7156** | 52.9 min |
+| exp_resnet18_frozen (6 runs, 2 sessions) | ResNet18 (frozen) | 227 | 5 | 0.845–0.855 | 0.520–0.576 | NOT MEASURED | NOT MEASURED | ~10.6 min |
+| exp_resnet18_finetuned (session 1) | ResNet18 (fine-tuned) | 227 | 15 | 0.9013 | 0.7188 | **0.9311** | **0.7156** | 52.9 min |
+| exp_resnet18_finetuned (session 2) | ResNet18 (fine-tuned) | 227 | 6 | 0.9013 | 0.6926 | 0.9363 | 0.7356 | 19.2 min |
+| exp_resnet18_finetuned_classweighted | ResNet18 (fine-tuned, weighted loss) | 227 | 15 | 0.8442 | 0.7153 | NOT MEASURED | NOT MEASURED | 48.1 min |
 
 Full detail: `docs/EXPERIMENTS.md`, `docs/RESULTS.md`, `experiments/experiments.csv`.
-Frozen-backbone macro F1 varied 0.520–0.576 across 4 identical runs with
-the same seed — a measured non-determinism, see `docs/REPRODUCIBILITY.md`.
+Two independent full sessions produced two different final test results
+(93.11%/71.56% and 93.63%/73.56%) from separately-trained models — real,
+measured non-determinism, not an error; see `docs/REPRODUCIBILITY.md`.
+**Class-weighted loss (Phase 07) did not fix the spider-class failure**
+(val spider F1 still 0.0) and was not a clear win on macro F1 either —
+see `docs/RESULTS.md`'s "did it help?" section.
 
 ## Error analysis
 
-Done for the final-test confusion matrix — see `docs/ERROR_ANALYSIS.md`.
-Key finding: complete failure on the "spider" class (0/7 correct, mostly
-misclassified as "other"); "swiss cheese" has high precision (0.997) but
-poor recall (0.576). No image-level failure gallery yet (Phase 09).
+See `docs/ERROR_ANALYSIS.md`. Complete failure on "spider" (0/7 test,
+0/7 val even after class-weighted retraining); "swiss cheese" has high
+precision but weak recall. Grad-CAM (Phase 09) shows the model attends
+to a real, localized feature for spider images — it just consistently
+mislabels it as "impact ejecta," suggesting genuine visual similarity
+between the two classes rather than a training failure.
 
 ## Explainability
 
-Grad-CAM and calibration code implemented, tested, and wired into the
-API's `/explain` endpoint — but not yet run against the real trained
-checkpoint (only verified end-to-end with an untrained one). See
-`docs/EXPLAINABILITY.md`.
+Grad-CAM and calibration run against the real trained checkpoint (Phase
+09, done). ECE 0.1131 → 0.0644 after temperature scaling — the model is
+measurably overconfident. See `docs/EXPLAINABILITY.md`.
 
 ## Results
 

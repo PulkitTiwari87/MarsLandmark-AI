@@ -18,9 +18,9 @@ primary source or an experiment actually run.
 | 04 — Data pipeline (grouped split, Dataset/DataLoader) | Done — `src/data/split.py`, `src/data/dataset.py`, `docs/DATA_PIPELINE.md` |
 | 05 — Baseline | Done — trained in Colab 2026-09-17: SimpleCNN val macro F1 0.2978 (`docs/EXPERIMENTS.md`) |
 | 06 — Deep learning / transfer learning | Done — ResNet18 frozen (val macro F1 0.52–0.58, 4 runs) and fine-tuned (0.7188, selected) (`docs/EXPERIMENTS.md`) |
-| 07 — Optimization (imbalance, overfitting/underfitting investigation) | Code done (`src/training/imbalance.py`, wired into `src/training/train.py`), unit-tested; **comparison run not yet executed** — needs a Colab run against the real checkpoint |
-| 08 — Final evaluation | Done — test accuracy 93.11%, macro F1 71.56%, full confusion matrix in `docs/RESULTS.md`/`reports/final_test_evaluation.json` |
-| 09 — Explainability & robustness | Grad-CAM + calibration code done (`src/explainability/gradcam.py`, `src/training/calibration.py`), unit-tested, wired into the API; **not yet run against the real checkpoint** — see `docs/EXPLAINABILITY.md`. Robustness testing not started. |
+| 07 — Optimization (imbalance, overfitting/underfitting investigation) | Done — class-weighted loss run and measured NOT to fix the spider-class failure (val spider F1 still 0.0); val macro F1 (0.7153) inconclusive vs. unweighted baseline given measured noise. See `docs/EXPERIMENTS.md`, `docs/RESULTS.md`. |
+| 08 — Final evaluation | Done, **twice** (two independent sessions): 93.11%/71.56% and 93.63%/73.56% test accuracy/macro F1 — both real, both kept, see `docs/RESULTS.md`, `docs/REPRODUCIBILITY.md` |
+| 09 — Explainability & robustness | Grad-CAM + calibration run against the real checkpoint — spider attention is real but mislabeled as impact ejecta; ECE 0.1131→0.0644 after temperature scaling. See `docs/EXPLAINABILITY.md`, `docs/ERROR_ANALYSIS.md`. Robustness testing not started. |
 | 10 — Detection/localization | Not applicable — dataset only supports classification, see `docs/DATASET_SELECTION.md` |
 | 11 — API | Done — `src/api/main.py`, tested, verified live in a browser |
 | 12 — Frontend/dashboard | Done — `frontend/index.html`, verified live end-to-end (predict + Grad-CAM) in a browser |
