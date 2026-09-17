@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>MarsLandmark-AI</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; }
+  h1 { font-size: 1.4rem; }
+  .note { color: #555; font-size: 0.9rem; }
+  #dropzone { border: 2px dashed #999; border-radius: 8px; padding: 2rem; text-align: center; cursor: pointer; }
+  #dropzone.dragover { background: #f0f6ff; border-color: #3366cc; }
+  #preview { max-width: 227px; margin-top: 1rem; border: 1px solid #ccc; }
+  #result { margin-top: 1.5rem; }
+  table { border-collapse: collapse; width: 100%; margin-top: 0.5rem; }
+  td, th { border: 1px solid #ddd; padding: 0.4rem 0.6rem; text-align: left; font-size: 0.9rem; }
+  #heatmap { max-width: 227px; margin-top: 0.5rem; image-rendering: pixelated; }
+  #error { color: #b00020; margin-top: 1rem; }
+  #apiBase { width: 100%; padding: 0.3rem; margin-bottom: 1rem; }
+</style>
+</head>
+<body>
+  <h1>MarsLandmark-AI</h1>
+  <p class="note">
+    Classifies a HiRISE landmark crop into one of 8 classes. Measured
+    test accuracy 93.11%, macro F1 71.56% — the model completely fails
+    on the "spider" class (0/7 in testing). See docs/MODEL_CARD.md
+    before relying on any prediction.
+  </p>
+
+  <label for="apiBase">API base URL</label>
+  <input id="apiBase" value="http://localhost:8000" />
+
+  <div id="dropzone">Drop an image here, or click to choose one</div>
+  <input type="file" id="fileInput" accept="image/*" style="display:none" />
+  <img id="preview" style="display:none" />
+
+  <div id="result" style="display:none">
+    <h3>Prediction: <span id="predictedClass"></span> (<span id="confidence"></span>)</h3>
+    <table>
+      <thead><tr><th>Class</th><th>Confidence</th></tr></thead>
+      <tbody id="topKBody"></tbody>
+    </table>
+    <button id="explainBtn">Show Grad-CAM</button>
+    <div><img id="heatmap" style="display:none" /></div>
+  </div>
+
+  <div id="error" style="display:none"></div>
+
+<script>
+const dropzone = document.getElementById('dropzone');
+const fileInput = document.getElementById('fileInput');
+const preview = document.getElementById('preview');
+const resultEl = document.getElementById('result');
+const errorEl = document.getElementById('error');
+const explainBtn = document.getElementById('explainBtn');
+const heatmapEl = document.getElementById('heatmap');
+
+let currentFile = null;
+
+dropzone.addEventListener('click', () => fileInput.click());
+dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+dropzone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dropzone.classList.remove('dragover');
+  if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener('change', () => {
+  if (fileInput.files.length) handleFile(fileInput.files[0]);
+});
+
+function handleFile(file) {
+  currentFile = file;
+  preview.src = URL.createObjectURL(file);
+  preview.style.display = 'block';
+  heatmapEl.style.display = 'none';
+  errorEl.style.display = 'none';
+  predict(file);
+}
+
+function apiBase() {
+  return document.getElementById('apiBase').value.replace(/\/$/, '');
+}
+
+async function predict(file) {
+  const form = new FormData();
+  form.append('file', file);
+  try {
+    const resp = await fetch(`${apiBase()}/predict`, { method: 'POST', body: form });
+    if (!resp.ok) {
+      const body = await resp.json().catch(() => ({}));
+      throw new Error(body.detail || `HTTP ${resp.status}`);
+    }
+    const data = await resp.json();
+    document.getElementById('predictedClass').textContent = data.predicted_class;
+    document.getElementById('confidence').textContent = (data.confidence * 100).toFixed(1) + '%';
+    const tbody = document.getElementById('topKBody');
+    tbody.innerHTML = '';
+    for (const item of data.top_k) {
+      const row = document.createElement('tr');
+      row.innerHTML = `<td>${item.class_name}</td><td>${(item.confidence * 100).toFixed(1)}%</td>`;
+      tbody.appendChild(row);
+    }
+    resultEl.style.display = 'block';
+    errorEl.style.display = 'none';
+  } catch (err) {
+    errorEl.textContent = 'Prediction failed: ' + err.message;
+    errorEl.style.display = 'block';
+    resultEl.style.display = 'none';
+  }
+}
+
+explainBtn.addEventListener('click', async () => {
+  if (!currentFile) return;
+  const form = new FormData();
+  form.append('file', currentFile);
+  try {
+    const resp = await fetch(`${apiBase()}/explain`, { method: 'POST', body: form });
+    if (!resp.ok) {
+      const body = await resp.json().catch(() => ({}));
+      throw new Error(body.detail || `HTTP ${resp.status}`);
+    }
+    const data = await resp.json();
+    heatmapEl.src = 'data:image/png;base64,' + data.heatmap_png_base64;
+    heatmapEl.style.display = 'block';
+  } catch (err) {
+    errorEl.textContent = 'Explain failed: ' + err.message;
+    errorEl.style.display = 'block';
+  }
+});
+</script>
+</body>
+</html>
